@@ -1,0 +1,26 @@
+[Unit]
+Description=Nomad
+Documentation=https://www.nomadproject.io/docs/agent/
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=10
+StartLimitBurst=3
+
+# If you are running Consul, please uncomment following Wants/After configs.
+# Assuming your Consul service unit name is "consul"
+Wants=consul.service
+After=consul.service
+
+[Service]
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/bin/nomad agent -config /etc/nomad/nomad.conf
+KillMode=process
+KillSignal=SIGINT
+LimitNOFILE=infinity
+LimitNPROC=infinity
+TasksMax=infinity
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

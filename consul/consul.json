@@ -1,0 +1,17 @@
+{
+  "datacenter": "InInDer",
+  "data_dir": "/var/lib/consul",
+
+  "bind_addr": "127.0.0.1",
+  
+  "server": true,
+  "bootstrap": true,
+  
+  "connect": {
+    "enabled": true
+  },
+
+  "ui_config": {
+    "enabled": true
+  }
+}
