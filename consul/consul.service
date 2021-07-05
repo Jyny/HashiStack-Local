@@ -1,17 +1,16 @@
 [Unit]
-Description=Consul
-Documentation=https://www.consul.io/docs/agent/options
+Description=Consul Agent
 Requires=network-online.target
 After=network-online.target
 
 [Service]
-ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/usr/bin/consul agent -config-dir=/etc/consul.d
-KillMode=process
-KillSignal=SIGINT
-LimitNOFILE=65536
+User=consul
+Group=consul
+EnvironmentFile=-/etc/default/consul
 Restart=on-failure
-TimeoutSec=60
+ExecStart=/usr/bin/consul agent $CONSUL_FLAGS -config-dir=/etc/consul.d
+ExecReload=/usr/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
 
 [Install]
 WantedBy=multi-user.target
